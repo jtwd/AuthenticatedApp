@@ -1,11 +1,12 @@
 import express from 'express';
+import path from 'path';
 
 const PORT = 8115;
 
 let app = express();
 
 app.get('/*', (req, res) => {
-  res.send("Hello world");
+  res.sendFile(path.join(__dirname, './index.html'));
 })
 
 app.listen(PORT, () => console.log(`Running on port ${PORT}`));
