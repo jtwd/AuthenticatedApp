@@ -16,7 +16,7 @@ const Greeting = ({ isAuthenticated, title}) => {
     <div>
       <h1>Welcome back!</h1>
       <p>You are logged in. Now you can use the app</p>
-      <a href="#" className="btn btn-primary btn-lg">Use this thing!</a>
+      <Link to="new-event" className="btn btn-primary btn-lg">Use this thing!</Link>
     </div>
   )
 
