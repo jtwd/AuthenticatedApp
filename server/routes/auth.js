@@ -28,6 +28,6 @@ router.post('/', (req, res) => {
       res.status(401).json({ errors: { form: 'Invalid Credentials'}});
     }
   })
-})
+});
 
 export default router;
