@@ -14,7 +14,7 @@ export default (req, res, next) => {
   if (token) {
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
       if (err) {
-        res.status(401).json({ error: 'Failed to authneticate' })
+        res.status(401).json({ error: 'Failed to authenticate' })
       } else {
         User.query({
           where: { id: decoded.id },
@@ -26,7 +26,6 @@ export default (req, res, next) => {
             req.currentUser = user;
             next();
           }
-
         });
       }
     })
