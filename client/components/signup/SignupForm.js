@@ -7,6 +7,9 @@ import map from 'lodash/map';
 import classnames from 'classnames'
 
 import timezones from '../../data/timezones';
+import validateInput from '../../../server/shared/validations/signup';
+
+import TextFieldGroup from '../common/TextFieldGroup';
 
 
 class SignupForm extends Component {
@@ -32,15 +35,28 @@ class SignupForm extends Component {
     this.setState({[ele.name]: ele.value});
   }
 
+  isValid() {
+    const { errors, isValid} = validateInput(this.state);
+
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
-    this.setState({ errors: {}, isLoading: true }); // reset errors for re-validation
-    this.props.userSignupRequest(this.state) // returns a promise
-      .then(
-        () => {},
-        ({ data }) => this.setState({ errors: data, isLoading: false }) // put errors on state
-      );
+    if (this.isValid()) {
+      this.setState({errors: {}, isLoading: true}); // reset errors for re-validation
+      this.props.userSignupRequest(this.state) // returns a promise
+        .then(
+          () => {
+          },
+          ({data}) => this.setState({errors: data, isLoading: false}) // put errors on state
+        );
+    }
   }
 
   render() {
@@ -53,49 +69,36 @@ class SignupForm extends Component {
       <form onSubmit={this.onSubmit}>
         <h1>Sign up</h1>
 
-        <div className={classnames("form-group", { 'has-error': errors.username})}>
-          <label className="control-label">Username</label>
-          <input
-            type="text"
-            name="username"
-            className="form-control"
-            value={this.state.username}
-            onChange={this.onChange} />
-          {errors.username && <span className="help-block">{errors.username}</span>}
-        </div>
+        <TextFieldGroup
+          error={errors.username}
+          field="username"
+          value={this.state.username}
+          label="Username"
+          onChange={this.onChange} />
 
-        <div className={classnames("form-group", { 'has-error': errors.email})}>
-          <label className="control-label">Email</label>
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            value={this.state.email}
-            onChange={this.onChange} />
-          {errors.email && <span className="help-block">{errors.email}</span>}
-        </div>
+        <TextFieldGroup
+          error={errors.email}
+          field="email"
+          value={this.state.email}
+          label="Email"
+          type="email"
+          onChange={this.onChange} />
 
-        <div className={classnames("form-group", { 'has-error': errors.password})}>
-          <label className="control-label">Password</label>
-          <input
-            type="password"
-            name="password"
-            className="form-control"
-            value={this.state.password}
-            onChange={this.onChange} />
-          {errors.password && <span className="help-block">{errors.password}</span>}
-        </div>
+        <TextFieldGroup
+          error={errors.password}
+          field="password"
+          value={this.state.password}
+          label="Password"
+          type="password"
+          onChange={this.onChange} />
 
-        <div className={classnames("form-group", { 'has-error': errors.passwordConfirmation})}>
-          <label className="control-label">Confirm Password</label>
-          <input
-            type="password"
-            name="passwordConfirmation"
-            className="form-control"
-            value={this.state.passwordConfirmation}
-            onChange={this.onChange} />
-          {errors.passwordConfirmation && <span className="help-block">{errors.passwordConfirmation}</span>}
-        </div>
+        <TextFieldGroup
+          error={errors.passwordConfirmation}
+          field="passwordConfirmation"
+          value={this.state.passwordConfirmation}
+          label="Confirm Password"
+          type="password"
+          onChange={this.onChange} />
 
         <div className={classnames("form-group", { 'has-error': errors.timezone})}>
           <label className="control-label">Timezone</label>
