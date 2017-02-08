@@ -4,7 +4,8 @@
 
 import React, {PropTypes, Component} from 'react';
 import map from 'lodash/map';
-import classnames from 'classnames'
+import classnames from 'classnames';
+//import browserHistory from 'react-router';
 
 import timezones from '../../data/timezones';
 import validateInput from '../../../server/shared/validations/signup';
@@ -53,6 +54,8 @@ class SignupForm extends Component {
       this.props.userSignupRequest(this.state) // returns a promise
         .then(
           () => {
+            //browserHistory.push('/');
+            this.context.router.push('/');
           },
           ({data}) => this.setState({errors: data, isLoading: false}) // put errors on state
         );
@@ -124,6 +127,10 @@ class SignupForm extends Component {
 
 SignupForm.propTypes = {
   userSignupRequest: PropTypes.func.isRequired
+};
+
+SignupForm.contextTypes = {
+  router: PropTypes.object.isRequired
 };
 
 export default SignupForm;
