@@ -60,7 +60,7 @@ class SignupForm extends Component {
             });
             this.context.router.push('/');
           },
-          ({data}) => this.setState({errors: data, isLoading: false}) // put errors on state
+          (err) => this.setState({errors: err.response.data, isLoading: false}) // put errors on state
         );
     }
   }

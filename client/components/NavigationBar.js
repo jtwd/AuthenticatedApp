@@ -33,7 +33,7 @@ class NavigationBar extends Component {
       <nav className="navbar navbar-default">
         <div className="container-fluid">
           <div className="navbar-header">
-            <Link className="navbar-brand" to="/">Tropicana admin: Glasses promotion</Link>
+            <Link className="navbar-brand" to="/">Authenticated App</Link>
           </div>
 
           <div className="collapse navbar-collapse">
@@ -49,7 +49,7 @@ class NavigationBar extends Component {
 NavigationBar.propTypes = {
   auth: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
-}
+};
 
 function mapStateToProps(state) {
   return {
